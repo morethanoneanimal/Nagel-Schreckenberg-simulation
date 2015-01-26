@@ -8,7 +8,6 @@ class TestSimulationManager(unittest.TestCase):
         self.simulation = SimulationManager(self.mock)
 
     def test_makeSteps(self):
-        #mock = simulation.road.Road(3, 100)
         mock = Mock()
         s = SimulationManager(mock)
         assert mock.update.called_once_with()
