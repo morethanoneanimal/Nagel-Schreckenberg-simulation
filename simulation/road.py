@@ -1,17 +1,16 @@
-import config
+import config, simulation.speedLimits
 from functools import reduce
 from simulation.car import Car
 
 class Road:
     def __init__(self, lanesCount, length, speedLimits):
         self.lanes = []
-        self.speedLimits = speedLimits
+        self.speedLimits = speedLimits if speedLimits != None else simulation.speedLimits.SpeedLimits([])
         for x in range(lanesCount):
             self.lanes.append( [None]*length )
 
     def update(self):
-        if self.speedLimits != None:
-            self.speedLimits.update()
+        self.speedLimits.update()
         for lane in self.lanes:
             for entity in lane:
                 if entity != None:
@@ -31,10 +30,13 @@ class Road:
     def carCount(self):
         return sum( reduce(lambda x, y: x+(0 if y == None else 1), lane, 0) for lane in self.lanes)
 
+    def getMaxSpeedAtPos(self, pos):
+        return self.speedLimits.getLimit(pos)
+
     def distanceToNextThing(self, pos):
+        """Counts distance between given pos and next object (car or obstacle)"""
         return self.__distanceToNextThing((pos[0]+1, pos[1]))
     def __distanceToNextThing(self, pos):
-        """Counts distance between given pos and next object (car or obstacle)"""
         if pos[0] >= self.getLength():
             return self.getLength() # heaven
         else:
