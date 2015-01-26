@@ -9,7 +9,6 @@ class Road:
             self.lanes.append( [None]*length )
 
     def update(self):
-        print("update")
         for lane in self.lanes:
             for entity in lane:
                 if entity != None:
