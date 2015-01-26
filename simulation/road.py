@@ -3,8 +3,9 @@ from functools import reduce
 from simulation.car import Car
 
 class Road:
-    def __init__(self, lanesCount, length):
+    def __init__(self, lanesCount, length, speedLimits):
         self.lanes = []
+        self.speedLimits = speedLimits
         for x in range(lanesCount):
             self.lanes.append( [None]*length )
 

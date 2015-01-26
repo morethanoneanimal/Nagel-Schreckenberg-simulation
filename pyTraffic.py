@@ -1,4 +1,4 @@
-import sys, pygame, config, simulation.road, random
+import sys, pygame, config, simulation.road, simulation.speedLimits, random
 from simulation.car import Car
 from representation import Representation
 from simulationManager import SimulationManager
@@ -13,7 +13,8 @@ acc = 0
 #prevents update going into vicious circle
 limit = 0
 
-road = simulation.road.Road(config.lanes, config.length)
+speedLimits = simulation.speedLimits.SpeedLimits([])
+road = simulation.road.Road(config.lanes, config.length, speedLimits)
 representation = Representation(screen, road)
 simulation = SimulationManager(road)
 

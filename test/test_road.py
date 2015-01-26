@@ -1,13 +1,14 @@
 import unittest, functools
-import simulation.road, config
+import simulation.road, simulation.speedLimits, config
 from simulation.car import Car
 
 class TestRoad(unittest.TestCase):
     def setUp(self):
-        self.road = simulation.road.Road(3, 100)
+        speedLimits = simulation.speedLimits.SpeedLimits([])
+        self.road = simulation.road.Road(3, 100, speedLimits)
 
     def test_init(self):
-        r = simulation.road.Road(3, 20)
+        r = simulation.road.Road(3, 20, None)
         self.assertEqual(3, r.getLanesCount())
         self.assertEqual(20, r.getLength())
         self.assertEqual(r.carCount(), 0)
@@ -17,7 +18,7 @@ class TestRoad(unittest.TestCase):
         self.assertEqual(1, r.carCount())
 
     def test_inBounds(self):
-        r = simulation.road.Road(3, 100)
+        r = simulation.road.Road(3, 100, None)
         self.assertFalse(r.inBounds((-1, -1)))
         self.assertFalse(r.inBounds((1, -1)))
         self.assertFalse(r.inBounds((-1, 2)))
@@ -27,7 +28,7 @@ class TestRoad(unittest.TestCase):
         self.assertTrue(r.inBounds((99, 2)))
 
     def test_placeObject(self):
-        r = simulation.road.Road(3, 40)
+        r = simulation.road.Road(3, 40, None)
         car1, car2 = Car(r, (20, 0)), Car(r, (30, 0))
         self.assertTrue(r.placeObjects([car1, car2]))
         self.assertEqual(2, r.carCount())
