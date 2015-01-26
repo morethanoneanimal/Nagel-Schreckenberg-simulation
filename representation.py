@@ -7,8 +7,10 @@ class Representation():
         self.margins = (10, 10)
         self.cellSize = 10
 
+        self.colors = [ (200, 0, 0), (180, 20, 0), (160, 40, 0), (140, 60, 0), (120, 80, 0), (100, 100, 0), (80, 120, 0), (60, 140, 0), (40, 160, 0) ]
+
     def draw(self):
-        self.screen.fill( (0, 100, 100) )
+        self.screen.fill( (0, 0, 0) )
         self.drawRoad()
 
     def drawRoad(self):
@@ -21,8 +23,8 @@ class Representation():
         x = self.margins[0]
         for cell in lane:
             if cell != None:
-                pygame.draw.rect(self.screen, (200,200,0), (x,y,self.cellSize,self.cellSize), 0)
-            pygame.draw.rect(self.screen, (0, 230, 0), (x,  y, self.cellSize, self.cellSize), 2)
+                pygame.draw.rect(self.screen, self.colors[cell.velocity], (x,y,self.cellSize,self.cellSize), 0)
+            pygame.draw.rect(self.screen, (0, 30, 200), (x,  y, self.cellSize, self.cellSize), 2)
 
             x += self.cellSize
             if x + self.cellSize + self.margins[0] >= config.width:
