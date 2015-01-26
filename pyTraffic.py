@@ -9,11 +9,9 @@ pygame.init()
 screen = pygame.display.set_mode(config.size)
 
 clock = pygame.time.Clock()
-acc = 0
-#prevents update going into vicious circle
-limit = 0
 
-speedLimits = simulation.speedLimits.SpeedLimits([])
+speedLimits = simulation.speedLimits.SpeedLimits(config.speedLimits)
+print(speedLimits.speedLimits)
 road = simulation.road.Road(config.lanes, config.length, speedLimits)
 representation = Representation(screen, road)
 simulation = SimulationManager(road)

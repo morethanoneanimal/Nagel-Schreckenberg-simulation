@@ -4,21 +4,23 @@ from simulation.car import Car
 
 class Road:
     def __init__(self, lanesCount, length, speedLimits):
-        self.lanes = []
+        self.lanes = Road.generateEmptyLanes(lanesCount, length)
+        self.updatedLanes = Road.generateEmptyLanes(lanesCount, length)
         self.speedLimits = speedLimits if speedLimits != None else simulation.speedLimits.SpeedLimits([])
-        for x in range(lanesCount):
-            self.lanes.append( [None]*length )
 
     def update(self):
         self.speedLimits.update()
         for lane in self.lanes:
             for entity in lane:
                 if entity != None:
-                    entity.update()
-        for lane in self.lanes:
-            for entity in lane: 
-                if entity != None:
-                    entity.updated = False
+                    newPos = entity.update()
+                    if self.inBounds(newPos):
+                        self.updatedLanes[newPos[1]][newPos[0]] = entity
+        self.flipLanes()
+
+    def flipLanes(self):
+        self.lanes = self.updatedLanes
+        self.updatedLanes = Road.generateEmptyLanes(self.getLanesCount(), self.getLength())
 
     def addCar(self):
         if self.lanes[0][0] == None:
@@ -34,13 +36,13 @@ class Road:
         return self.speedLimits.getLimit(pos)
 
     def distanceToNextThing(self, pos):
-        """Counts distance between given pos and next object (car or obstacle)"""
+        """Counts distance between given pos and next object (car or obstacle), takes into considerations stops (speedLimit set to 0)"""
         return self.__distanceToNextThing((pos[0]+1, pos[1]))
     def __distanceToNextThing(self, pos):
         if pos[0] >= self.getLength():
             return self.getLength() # heaven
         else:
-            if self.lanes[pos[1]][pos[0]] == None:
+            if self.lanes[pos[1]][pos[0]] == None and not self.speedLimits.shouldStop(pos):
                 return 1 + self.__distanceToNextThing((pos[0]+1, pos[1]))
             else:
                 return 0
@@ -64,3 +66,9 @@ class Road:
         return len(self.lanes[0])
     def getLanesCount(self):
         return len(self.lanes)
+
+    def generateEmptyLanes(lanesCount, length):
+        lanes = []
+        for x in range(lanesCount):
+            lanes.append( [None] * length )
+        return lanes

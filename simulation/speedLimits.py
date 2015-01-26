@@ -2,7 +2,7 @@ import config
 
 class SpeedLimits:
     def __init__(self, listOfTuples):
-        self.speedLimits = map(lambda x: SpeedLimit(x[0], x[1], x[2], x[3]), listOfTuples)
+        self.speedLimits = list(map(lambda x: SpeedLimit(x[0], x[1], x[2], x[3]), listOfTuples))
 
     def update(self):
         for speedLimit in self.speedLimits:
@@ -14,6 +14,9 @@ class SpeedLimits:
                 return speedLimit.speedLimit
         # limit not found, returnig max speed
         return config.maxSpeed
+
+    def shouldStop(self, pos):
+        return self.getLimit(pos) == 0
 
 class SpeedLimit:
     def __init__(self, range, speedLimit, ticks, active):

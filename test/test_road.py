@@ -39,3 +39,14 @@ class TestRoad(unittest.TestCase):
         self.assertEqual(3, r.carCount())
         self.assertEqual(0, r.distanceToNextThing(car1.pos))
         self.assertEqual(8, r.distanceToNextThing(car3.pos))
+
+    def test_tunneling(self):
+        # obstacle
+        speedLimits = simulation.speedLimits.SpeedLimits( [ (((10,0), (10,0)), 0, 0, True) ] )
+        r = simulation.road.Road(1, 20, speedLimits)
+        car = Car(r, (0,0))
+        self.assertTrue(r.placeObject(car))
+        for x in range(100):
+            r.update()
+        self.assertEqual(0, car.velocity)
+        self.assertEqual((9, 0), car.pos)
