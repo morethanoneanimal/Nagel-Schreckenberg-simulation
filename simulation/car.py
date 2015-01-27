@@ -11,7 +11,7 @@ class Car:
         self.velocity += 1
         # checking distance
         distance = self.road.distanceToNextThing(self.pos)
-        self.velocity = min(self.velocity, distance, self.road.getMaxSpeedAtPos(self.pos))
+        self.velocity = min(self.velocity, distance, self.road.getSpeedLimitAt(self.pos))
 
         if self.velocity > 0 and random.random() >= 0.75:
             self.velocity -= 1

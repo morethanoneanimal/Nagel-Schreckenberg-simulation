@@ -32,7 +32,7 @@ class Road:
     def carCount(self):
         return sum( reduce(lambda x, y: x+(0 if y == None else 1), lane, 0) for lane in self.lanes)
 
-    def getMaxSpeedAtPos(self, pos):
+    def getSpeedLimitAt(self, pos):
         return self.speedLimits.getLimit(pos)
 
     def distanceToNextThing(self, pos):
