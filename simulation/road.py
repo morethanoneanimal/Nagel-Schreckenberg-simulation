@@ -8,15 +8,19 @@ class Road:
         self.updatedLanes = Road.generateEmptyLanes(lanesCount, length)
         self.speedLimits = speedLimits if speedLimits != None else simulation.speedLimits.SpeedLimits([])
 
-    def update(self):
-        self.speedLimits.update()
+    def __updateCars(self, action):
         for lane in self.lanes:
             for entity in lane:
                 if entity != None:
-                    newPos = entity.update()
+                    newPos = action(entity)
                     if self.inBounds(newPos):
                         self.updatedLanes[newPos[1]][newPos[0]] = entity
         self.flipLanes()
+
+    def update(self):
+        self.speedLimits.update()
+        self.__updateCars(lambda x: x.updateLane())
+        self.__updateCars(lambda x: x.updateX())
 
     def flipLanes(self):
         self.lanes = self.updatedLanes
@@ -28,6 +32,15 @@ class Road:
             return True
         else:
             return False
+
+    def pushCars(self, amount):
+        total = 0
+        for y in range(self.getLanesCount()):
+            car = Car(self, (0, y), config.maxSpeed)
+            if self.placeObject(car):
+                total += 1
+        return total
+
 
     def carCount(self):
         return sum( reduce(lambda x, y: x+(0 if y == None else 1), lane, 0) for lane in self.lanes)
@@ -81,7 +94,7 @@ class Road:
         return all(self.placeObject(entity) for entity in entities)
 
     def placeObject(self, entity):
-        if not self.inBounds(entity.pos): return False
+        if not self.inBounds(entity.pos) or self.lanes[entity.pos[1]][entity.pos[0]] != None: return False
         else:
             self.lanes[entity.pos[1]][entity.pos[0]] = entity
             return True

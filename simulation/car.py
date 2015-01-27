@@ -6,7 +6,16 @@ class Car:
         self.road = road
         self.pos = pos
 
-    def update(self):
+    def updateLane(self):
+        if self.willingToChangeUp():
+            if random.random() >= 0.5:
+                self.pos = self.pos[0], self.pos[1]-1
+        elif self.willingToChangeDown():
+            if random.random() >= 0.5:
+                self.pos = self.pos[0], self.pos[1]+1
+        return self.pos
+
+    def updateX(self):
         self.velocity = self.calcNewVelocity()
 
         if self.velocity > 0 and random.random() >= 0.75:
@@ -28,6 +37,7 @@ class Car:
         destLaneSpeed = self.road.getMaxSpeedAt( (self.pos[0], destLane) )
         if destLaneSpeed <= srcLaneSpeed: return False
         prevCar = self.road.findPrevCar( (self.pos[0], destLane) )
-        return prevCar == None
-
-
+        if prevCar == None: return True
+        else:
+            distanceToPrevCar = self.pos[0] - prevCar.pos[0]
+            return distanceToPrevCar >= prevCar.velocity

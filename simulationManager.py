@@ -1,8 +1,9 @@
 import pygame, config
 
 class SimulationManager:
-    def __init__(self, road):
+    def __init__(self, road, trafficGenerator):
         self.road = road
+        self.trafficGenerator = trafficGenerator
         self.acc = 0
         self.timeFactor = 0
         self.prevTimeFactor = 1
@@ -20,6 +21,7 @@ class SimulationManager:
         for x in range(steps): self.makeStep()
 
     def makeStep(self):
+        self.trafficGenerator.generate(self.road)
         self.road.update();
 
     def processKey(self, key):
