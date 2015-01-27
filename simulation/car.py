@@ -1,8 +1,8 @@
 import random, config
 
 class Car:
-    def __init__(self, road, pos):
-        self.velocity = 1
+    def __init__(self, road, pos, velocity = 0):
+        self.velocity = velocity
         self.road = road
         self.pos = pos
 
@@ -17,3 +17,16 @@ class Car:
 
     def calcNewVelocity(self):
         return min(self.velocity + 1, self.road.getMaxSpeedAt(self.pos))
+
+    def willingToChangeUp(self):
+        return self.road.possibleLaneChangeUp(self.pos) and self.__willingToChangeLane(self.pos[1], self.pos[1] - 1)
+    def willingToChangeDown(self):
+        return self.road.possibleLaneChangeUp(self.pos) and self.__willingToChangeLane(self.pos[1], self.pos[1] + 1)
+
+    def __willingToChangeLane(self, sourceLane, destLane):
+        srcLaneSpeed = self.road.getMaxSpeedAt( (self.pos[0], sourceLane) )
+        destLaneSpeed = self.road.getMaxSpeedAt( (self.pos[0], destLane) )
+        if destLaneSpeed < srcLaneSpeed: return False
+        return True
+
+

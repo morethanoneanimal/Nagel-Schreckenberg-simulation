@@ -4,9 +4,36 @@ from simulation.road import Road
 from simulation.car import Car
 from simulation.speedLimits import *
 
+class TestDistanceFunctions(unittest.TestCase):
+    def setUp(self):
+        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0), SpeedLimit.createObstacle((80, 2)) ] )
+        self.road = Road(3, 100, speedLimits)
+        self.freeCar = Car(self.road, (50, 0))
+        self.carFacingObstacle = Car(self.road, (79, 2))
+        self.car1 = Car(self.road, (75, 2))
+        self.road.placeObjects([self.freeCar, self.carFacingObstacle, self.car1])
+
+    def test_findPrevCar(self):
+        length = self.road.getLength()
+        for x in range(length):
+            self.assertEqual(None, self.road.findPrevCar( (x, 1) ))
+        for x in ((80, length)):
+            self.assertEqual(None, self.road.findPrevCar( (x, 2) ))
+        for x in range(50, length):
+            self.assertEqual(self.freeCar, self.road.findPrevCar( (x, 0) ))
+        self.assertEqual(self.car1, self.road.findPrevCar( (78, 2) ))
+
+    def test_distanceToNextThing(self):
+        for y in range(self.road.getLanesCount()):
+            self.assertTrue( self.road.distanceToNextThing( (99, y)) >= self.road.getLength())
+
+        self.assertEqual(0, self.road.distanceToNextThing( self.carFacingObstacle.pos ))
+        self.assertEqual(3, self.road.distanceToNextThing( self.car1.pos ))
+        self.assertEqual(49, self.road.distanceToNextThing( (0, 0) ) )
+
 class TestRoad(unittest.TestCase):
     def setUp(self):
-        speedLimits = SpeedLimits([])
+        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0), SpeedLimit.createObstacle((80, 2)) ] )
         self.road = Road(3, 100, speedLimits)
 
     def test_init(self):
@@ -20,8 +47,7 @@ class TestRoad(unittest.TestCase):
         self.assertEqual(1, r.carCount())
 
     def test__getMaxSpeedAt(self):
-        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0) ] )
-        road = Road(1, 50, speedLimits)
+        road = self.road
         self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((0,0)))
         self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((24,0)))
         self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((31,0)))
@@ -29,9 +55,8 @@ class TestRoad(unittest.TestCase):
         self.assertEqual(1, road.getMaxSpeedAt((26,0)))
         self.assertEqual(1, road.getMaxSpeedAt((30,0)))
 
-
     def test_inBounds(self):
-        r = Road(3, 100, None)
+        r = self.road
         self.assertFalse(r.inBounds((-1, -1)))
         self.assertFalse(r.inBounds((1, -1)))
         self.assertFalse(r.inBounds((-1, 2)))
