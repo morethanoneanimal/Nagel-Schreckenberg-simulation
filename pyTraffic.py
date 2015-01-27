@@ -10,8 +10,7 @@ screen = pygame.display.set_mode(config.size)
 
 clock = pygame.time.Clock()
 
-speedLimits = simulation.speedLimits.SpeedLimits(config.speedLimits)
-print(speedLimits.speedLimits)
+speedLimits = None
 road = simulation.road.Road(config.lanes, config.length, speedLimits)
 representation = Representation(screen, road)
 simulation = SimulationManager(road)

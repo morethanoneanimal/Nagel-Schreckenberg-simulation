@@ -1,12 +1,12 @@
 import unittest, config, random
 from simulation.road import Road
 from simulation.car import Car
-from simulation.speedLimits import SpeedLimits
+from simulation.speedLimits import *
 
 class TestCar(unittest.TestCase):
     def setUp(self):
         random.seed(None)
-        speedLimits = SpeedLimits( [ (((50, 0), (99, 0)), 2, 0, True) ] )
+        speedLimits = SpeedLimits( [ SpeedLimit(range=((50, 0), (99, 0)), limit=2, ticks=0) ] )
         road = self.road = Road(1, 100, speedLimits)
         self.car1 = Car(road, (0, 0))
         self.carA = Car(road, (25, 0))

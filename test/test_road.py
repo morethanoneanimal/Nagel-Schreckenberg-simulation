@@ -1,11 +1,12 @@
 import unittest, functools
-import simulation.speedLimits, config
+import config
 from simulation.road import Road
 from simulation.car import Car
+from simulation.speedLimits import *
 
 class TestRoad(unittest.TestCase):
     def setUp(self):
-        speedLimits = simulation.speedLimits.SpeedLimits([])
+        speedLimits = SpeedLimits([])
         self.road = Road(3, 100, speedLimits)
 
     def test_init(self):
@@ -19,7 +20,7 @@ class TestRoad(unittest.TestCase):
         self.assertEqual(1, r.carCount())
 
     def test__getMaxSpeedAt(self):
-        speedLimits = simulation.speedLimits.SpeedLimits( [ (((25, 0), (30, 0)), 1, 0, True) ] )
+        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0) ] )
         road = Road(1, 50, speedLimits)
         self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((0,0)))
         self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((24,0)))
@@ -54,7 +55,7 @@ class TestRoad(unittest.TestCase):
 
     def test_tunneling(self):
         # obstacle
-        speedLimits = simulation.speedLimits.SpeedLimits( [ (((10,0), (10,0)), 0, 0, True) ] )
+        speedLimits = SpeedLimits( [SpeedLimit.createObstacle((10,0))] )
         r = Road(1, 20, speedLimits)
         car = Car(r, (0,0))
         self.assertTrue(r.placeObject(car))
