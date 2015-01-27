@@ -18,6 +18,17 @@ class TestRoad(unittest.TestCase):
         self.assertTrue(r.addCar())
         self.assertEqual(1, r.carCount())
 
+    def test__getMaxSpeedAt(self):
+        speedLimits = simulation.speedLimits.SpeedLimits( [ (((25, 0), (30, 0)), 1, 0, True) ] )
+        road = Road(1, 50, speedLimits)
+        self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((0,0)))
+        self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((24,0)))
+        self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((31,0)))
+        self.assertEqual(1, road.getMaxSpeedAt((25,0)))
+        self.assertEqual(1, road.getMaxSpeedAt((26,0)))
+        self.assertEqual(1, road.getMaxSpeedAt((30,0)))
+
+
     def test_inBounds(self):
         r = Road(3, 100, None)
         self.assertFalse(r.inBounds((-1, -1)))
