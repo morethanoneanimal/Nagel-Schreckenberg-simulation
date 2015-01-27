@@ -50,12 +50,20 @@ class Road:
     def getMaxSpeedAt(self, pos):
         return min(self.getSpeedLimitAt(pos), self.distanceToNextThing(pos))
 
+    def findPrevCar(self, pos):
+        if not self.inBounds(pos) or self.getSpeedLimitAt(pos) == 0: return None
+        else:
+            if self.lanes[pos[1]][pos[0]] != None:
+                return self.lanes[pos[1]][pos[0]]
+            else:
+                return self.findPrevCar( (pos[0] - 1, pos[1]) )
+
     def possibleLaneChangeUp(self, pos):
         return self.__possibleLaneChange(pos, pos[1]-1)
     def possibleLaneChangeDown(self, pos):
         return self.__possibleLaneChange(pos, pos[1]+1)
     def __possibleLaneChange(self, pos, destLane):
-        if not self.inBounds( (0, destLane) ): return False
+        if not self.inBounds( (0, destLane) ) or self.lanes[destLane][pos[0]] != None: return False
         else:
             sourceLane = pos[1]
             oneMoreLane = destLane + (destLane - sourceLane)
