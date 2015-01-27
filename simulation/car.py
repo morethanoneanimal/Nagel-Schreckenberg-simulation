@@ -21,12 +21,13 @@ class Car:
     def willingToChangeUp(self):
         return self.road.possibleLaneChangeUp(self.pos) and self.__willingToChangeLane(self.pos[1], self.pos[1] - 1)
     def willingToChangeDown(self):
-        return self.road.possibleLaneChangeUp(self.pos) and self.__willingToChangeLane(self.pos[1], self.pos[1] + 1)
+        return self.road.possibleLaneChangeDown(self.pos) and self.__willingToChangeLane(self.pos[1], self.pos[1] + 1)
 
     def __willingToChangeLane(self, sourceLane, destLane):
         srcLaneSpeed = self.road.getMaxSpeedAt( (self.pos[0], sourceLane) )
         destLaneSpeed = self.road.getMaxSpeedAt( (self.pos[0], destLane) )
-        if destLaneSpeed < srcLaneSpeed: return False
-        return True
+        if destLaneSpeed <= srcLaneSpeed: return False
+        prevCar = self.road.findPrevCar( (self.pos[0], destLane) )
+        return prevCar == None
 
 
