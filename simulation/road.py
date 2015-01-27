@@ -47,6 +47,19 @@ class Road:
             else:
                 return 0
 
+    def possibleLaneChangeUp(self, pos):
+        return self.__possibleLaneChange(pos, pos[1]-1)
+    def possibleLaneChangeDown(self, pos):
+        return self.__possibleLaneChange(pos, pos[1]+1)
+    def __possibleLaneChange(self, pos, destLane):
+        if not self.inBounds( (0, destLane) ): return False
+        else:
+            sourceLane = pos[1]
+            oneMoreLane = destLane + (destLane - sourceLane)
+            if not self.inBounds( (0, oneMoreLane) ): return True
+            else:
+                return self.lanes[oneMoreLane][pos[0]] == None
+
     def inBounds(self, pos):
         return pos[0] >= 0 and pos[1] >= 0 and pos[0] < self.getLength() and pos[1] < self.getLanesCount()
 
