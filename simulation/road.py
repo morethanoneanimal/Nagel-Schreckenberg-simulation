@@ -47,6 +47,9 @@ class Road:
             else:
                 return 0
 
+    def getMaxSpeedAt(self, pos):
+        return min(self.getSpeedLimitAt(pos), self.distanceToNextThing(pos))
+
     def possibleLaneChangeUp(self, pos):
         return self.__possibleLaneChange(pos, pos[1]-1)
     def possibleLaneChangeDown(self, pos):
