@@ -32,7 +32,8 @@ class TestDistanceFunctions(unittest.TestCase):
 
 class TestRoad(unittest.TestCase):
     def setUp(self):
-        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0), SpeedLimit.createObstacle((80, 2)) ], 5)
+        self.maxSpeed = 5
+        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0), SpeedLimit.createObstacle((80, 2)) ], self.maxSpeed)
         self.road = Road(3, 100, speedLimits)
 
     def test_init(self):
@@ -47,9 +48,9 @@ class TestRoad(unittest.TestCase):
 
     def test__getMaxSpeedAt(self):
         road = self.road
-        self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((0,0)))
-        self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((24,0)))
-        self.assertEqual(config.maxSpeed, road.getMaxSpeedAt((31,0)))
+        self.assertEqual(self.maxSpeed, road.getMaxSpeedAt((0,0)))
+        self.assertEqual(self.maxSpeed, road.getMaxSpeedAt((24,0)))
+        self.assertEqual(self.maxSpeed, road.getMaxSpeedAt((31,0)))
         self.assertEqual(1, road.getMaxSpeedAt((25,0)))
         self.assertEqual(1, road.getMaxSpeedAt((26,0)))
         self.assertEqual(1, road.getMaxSpeedAt((30,0)))

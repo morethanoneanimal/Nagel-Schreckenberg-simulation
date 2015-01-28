@@ -45,7 +45,7 @@ class TestChangingLane(unittest.TestCase):
 
     def test_avoid_obstacle(self):
         road = self.twoLaneRoad
-        car = Car(road, (89, 0), config.maxSpeed)
+        car = Car(road, (89, 0), self.maxSpeed)
         road.placeObject(car)
 
         self.assertTrue( car.willingToChangeDown() )
