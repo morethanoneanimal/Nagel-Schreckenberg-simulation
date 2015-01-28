@@ -9,13 +9,13 @@ class SimulationManager:
         self.timeFactor = 0
         self.prevTimeFactor = 1
         self.running = True
+        self.stepsMade = 0
 
     def update(self, dt):
         self.acc += dt * self.timeFactor
         limit = 0
-        while self.acc >= self.updateFrame and limit < 10:
-            self.acc -= self.updateFrame
-            limit += 1
+        if self.acc >= self.updateFrame:
+            self.acc = self.acc % (self.updateFrame + 0)
             self.makeStep()
 
     def makeSteps(self, steps):
@@ -24,6 +24,7 @@ class SimulationManager:
     def makeStep(self):
         self.trafficGenerator.generate(self.road)
         self.road.update();
+        self.stepsMade += 1
 
     def processKey(self, key):
         {

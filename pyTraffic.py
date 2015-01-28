@@ -27,7 +27,7 @@ while simulation.running:
     clock.tick_busy_loop(config.maxFps)
     dt = clock.get_time()
     simulation.update(dt)
-    representation.draw(dt)
+    representation.draw(dt * simulation.timeFactor)
     pygame.display.flip()
 
 print("Goodbye")
