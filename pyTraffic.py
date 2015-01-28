@@ -15,11 +15,10 @@ screen = pygame.display.set_mode(config.size)
 
 clock = pygame.time.Clock()
 
-speedLimits = simulation.speedLimits.SpeedLimits([simulation.speedLimits.SpeedLimit( range=((100,1),(100,1)), limit=0, ticks=200, active=False)], config.maxSpeed)
-#speedLimits = simulation.speedLimits.SpeedLimits( [] )
+speedLimits = simulation.speedLimits.SpeedLimits(config.speedLimits, config.maxSpeed)
 road = simulation.road.Road(config.lanes, config.length, speedLimits)
 representation = Representation(screen, road)
-simulation = SimulationManager(road, SimpleTrafficGenerator())
+simulation = SimulationManager(road, SimpleTrafficGenerator(), config.updateFrame)
 
 while simulation.running:
     for event in pygame.event.get():

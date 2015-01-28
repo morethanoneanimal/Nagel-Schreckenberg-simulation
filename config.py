@@ -1,3 +1,4 @@
+from simulation.speedLimits import *
 
 maxFps= 40
 size = width, heigth = 1480, 480
@@ -10,4 +11,4 @@ length = 200
 maxSpeed = 5
 maxLength = 10000
 
-speedLimits = [ (((20, 0), (40, 2)), 3, 0, True), (((70, 0), (70, 0)), 0, 50, True) ]
+speedLimits = [SpeedLimit( range=((100,1),(100,1)), limit=0, ticks=200, active=False)]
