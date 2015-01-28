@@ -5,8 +5,10 @@ class Car:
         self.velocity = velocity
         self.road = road
         self.pos = pos
+        self.prevPos = pos
 
     def updateLane(self):
+        self.prevPos = self.pos
         if self.willingToChangeUp():
             if random.random() >= 0.5:
                 self.pos = self.pos[0], self.pos[1]-1
