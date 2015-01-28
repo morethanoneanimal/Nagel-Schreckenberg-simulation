@@ -1,12 +1,11 @@
 import unittest, functools
-import config
 from simulation.road import Road
 from simulation.car import Car
 from simulation.speedLimits import *
 
 class TestDistanceFunctions(unittest.TestCase):
     def setUp(self):
-        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0), SpeedLimit.createObstacle((80, 2)) ] )
+        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0), SpeedLimit.createObstacle((80, 2)) ] , 5)
         self.road = Road(3, 100, speedLimits)
         self.freeCar = Car(self.road, (50, 0))
         self.carFacingObstacle = Car(self.road, (79, 2))
@@ -33,7 +32,7 @@ class TestDistanceFunctions(unittest.TestCase):
 
 class TestRoad(unittest.TestCase):
     def setUp(self):
-        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0), SpeedLimit.createObstacle((80, 2)) ] )
+        speedLimits = SpeedLimits( [ SpeedLimit(range=((25, 0), (30, 0)), limit=1, ticks=0), SpeedLimit.createObstacle((80, 2)) ], 5)
         self.road = Road(3, 100, speedLimits)
 
     def test_init(self):
@@ -80,7 +79,7 @@ class TestRoad(unittest.TestCase):
 
     def test_tunneling(self):
         # obstacle
-        speedLimits = SpeedLimits( [SpeedLimit.createObstacle((10,0))] )
+        speedLimits = SpeedLimits( [SpeedLimit.createObstacle((10,0))], 5 )
         r = Road(1, 20, speedLimits)
         car = Car(r, (0,0))
         self.assertTrue(r.placeObject(car))

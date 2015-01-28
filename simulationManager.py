@@ -1,9 +1,10 @@
-import pygame, config
+import pygame
 
 class SimulationManager:
-    def __init__(self, road, trafficGenerator):
+    def __init__(self, road, trafficGenerator, updateFrame):
         self.road = road
         self.trafficGenerator = trafficGenerator
+        self.updateFrame = updateFrame
         self.acc = 0
         self.timeFactor = 0
         self.prevTimeFactor = 1
@@ -12,8 +13,8 @@ class SimulationManager:
     def update(self, dt):
         self.acc += dt * self.timeFactor
         limit = 0
-        while self.acc >= config.updateFrame and limit < 10:
-            self.acc -= config.updateFrame
+        while self.acc >= self.updateFrame and limit < 10:
+            self.acc -= self.updateFrame
             limit += 1
             self.makeStep()
 

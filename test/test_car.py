@@ -1,4 +1,4 @@
-import unittest, config, random
+import unittest, random
 from simulation.road import Road
 from simulation.car import Car
 from simulation.speedLimits import *
@@ -6,7 +6,8 @@ from simulation.speedLimits import *
 class TestCar(unittest.TestCase):
     def setUp(self):
         random.seed(None)
-        speedLimits = SpeedLimits( [ SpeedLimit(range=((50, 0), (99, 0)), limit=2, ticks=0) ] )
+        self.maxSpeed = 5
+        speedLimits = SpeedLimits( [ SpeedLimit(range=((50, 0), (99, 0)), limit=2, ticks=0) ], self.maxSpeed )
         road = self.road = Road(1, 100, speedLimits)
         self.car1 = Car(road, (0, 0))
         self.carA = Car(road, (25, 0))
@@ -22,5 +23,5 @@ class TestCar(unittest.TestCase):
             newVelocity = car.calcNewVelocity()
             self.assertTrue( newVelocity <= self.road.distanceToNextThing(car.pos) )
             self.assertTrue( newVelocity <= self.road.getSpeedLimitAt(car.pos) )
-            self.assertTrue( newVelocity <= config.maxSpeed )
+            self.assertTrue( newVelocity <= self.maxSpeed)
 

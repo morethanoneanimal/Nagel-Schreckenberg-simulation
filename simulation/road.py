@@ -1,4 +1,4 @@
-import config, simulation.speedLimits
+import simulation.speedLimits
 from functools import reduce
 from simulation.car import Car
 
@@ -6,7 +6,7 @@ class Road:
     def __init__(self, lanesCount, length, speedLimits):
         self.lanes = Road.generateEmptyLanes(lanesCount, length)
         self.updatedLanes = Road.generateEmptyLanes(lanesCount, length)
-        self.speedLimits = speedLimits if speedLimits != None else simulation.speedLimits.SpeedLimits([])
+        self.speedLimits = speedLimits if speedLimits != None else simulation.speedLimits.SpeedLimits([], 5)
 
     def __updateCars(self, action):
         for lane in self.lanes:
@@ -36,7 +36,7 @@ class Road:
     def pushCars(self, amount):
         total = 0
         for y in range(self.getLanesCount()):
-            car = Car(self, (0, y), config.maxSpeed)
+            car = Car(self, (0, y), self.speedLimits.maxSpeed)
             if self.placeObject(car):
                 total += 1
         return total

@@ -1,4 +1,4 @@
-import random, config
+import random
 
 class Car:
     def __init__(self, road, pos, velocity = 0):

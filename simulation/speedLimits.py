@@ -1,8 +1,7 @@
-import config
-
 class SpeedLimits:
-    def __init__(self, speedLimits):
+    def __init__(self, speedLimits, maxSpeed):
         self.speedLimits = speedLimits
+        self.maxSpeed = maxSpeed
 
     def update(self):
         for speedLimit in self.speedLimits:
@@ -13,7 +12,7 @@ class SpeedLimits:
             if speedLimit.active and speedLimit.inRange(pos):
                 return speedLimit.speedLimit
         # limit not found, returnig max speed
-        return config.maxSpeed
+        return self.maxSpeed
 
     def shouldStop(self, pos):
         return self.getLimit(pos) == 0

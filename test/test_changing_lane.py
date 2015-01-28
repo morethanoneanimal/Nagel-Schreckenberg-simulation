@@ -31,9 +31,10 @@ class TestChangingLane(unittest.TestCase):
     def setUp(self):
         speedLimit1 = SpeedLimit( range=((50, 0), (80, 0)), limit=1, ticks=0)
         obstacle = SpeedLimit.createObstacle( (90, 0) )
-        self.oneLaneRoad = Road(1, 100, SpeedLimits( [speedLimit1] ))
-        self.twoLaneRoad = Road(2, 100, SpeedLimits( [speedLimit1, obstacle] ))
-        self.threeLaneRoad = Road(3, 100, SpeedLimits( [speedLimit1, obstacle] ))
+        self.maxSpeed = 5
+        self.oneLaneRoad = Road(1, 100, SpeedLimits( [speedLimit1], self.maxSpeed ))
+        self.twoLaneRoad = Road(2, 100, SpeedLimits( [speedLimit1, obstacle], self.maxSpeed ))
+        self.threeLaneRoad = Road(3, 100, SpeedLimits( [speedLimit1, obstacle], self.maxSpeed ))
 
     def test_one_lane(self):
         road = self.oneLaneRoad
