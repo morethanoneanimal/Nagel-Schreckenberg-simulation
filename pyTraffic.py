@@ -17,7 +17,7 @@ clock = pygame.time.Clock()
 
 speedLimits = simulation.speedLimits.SpeedLimits(config.speedLimits, config.maxSpeed)
 road = simulation.road.Road(config.lanes, config.length, speedLimits)
-representation = Representation(screen, road)
+representation = Representation(screen, road, config.updateFrame)
 simulation = SimulationManager(road, config.trafficGenerator, config.updateFrame)
 
 while simulation.running:
@@ -27,7 +27,7 @@ while simulation.running:
     clock.tick_busy_loop(config.maxFps)
     dt = clock.get_time()
     simulation.update(dt)
-    representation.draw()
+    representation.draw(dt)
     pygame.display.flip()
 
 print("Goodbye")

@@ -1,25 +1,26 @@
 import pygame, config
 
 class Representation():
-    def __init__(self, screen, road):
+    def __init__(self, screen, road, updateFrame):
         self.screen = screen
         self.road = road
+        self.updateFrame = updateFrame
         self.margins = (10, 10)
         self.cellSize = 10
 
         self.colors = [ (200, 0, 0), (180, 20, 0), (160, 40, 0), (140, 60, 0), (120, 80, 0), (100, 100, 0), (80, 120, 0), (60, 140, 0), (40, 160, 0) ]
 
-    def draw(self):
+    def draw(self, dt):
         self.screen.fill( (0, 0, 0) )
-        self.drawRoad()
+        self.drawRoad(dt)
 
-    def drawRoad(self):
+    def drawRoad(self, dt):
         y = self.margins[1]
         for lane in self.road.lanes:
-            self.__drawLane(lane, y)
+            self.__drawLane(lane, y, dt)
             y += self.cellSize
 
-    def __drawLane(self, lane, y):
+    def __drawLane(self, lane, y, dt):
         x = self.margins[0]
         for cell in lane:
             if cell != None:
@@ -29,4 +30,4 @@ class Representation():
             x += self.cellSize
             if x + self.cellSize + self.margins[0] >= config.width:
                 x = self.margins[0]
-                y += 50
+                y += (self.road.getLanesCount() + 1)  * self.cellSize
