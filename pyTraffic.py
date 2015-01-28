@@ -18,7 +18,7 @@ clock = pygame.time.Clock()
 speedLimits = simulation.speedLimits.SpeedLimits(config.speedLimits, config.maxSpeed)
 road = simulation.road.Road(config.lanes, config.length, speedLimits)
 representation = Representation(screen, road)
-simulation = SimulationManager(road, SimpleTrafficGenerator(), config.updateFrame)
+simulation = SimulationManager(road, config.trafficGenerator, config.updateFrame)
 
 while simulation.running:
     for event in pygame.event.get():
