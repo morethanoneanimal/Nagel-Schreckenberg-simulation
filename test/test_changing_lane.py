@@ -68,6 +68,7 @@ class TestChangingLane(unittest.TestCase):
     def test_change_because_car_ahead(self):
         road = self.threeLaneRoad
         car1, car2 = Car(road, (0, 1), 5), Car(road, (2, 1), 5)
+        road.placeObjects( [car1, car2] )
 
         self.assertTrue( car1.willingToChangeUp() and car1.willingToChangeDown() )
         self.assertNotWillingToChange(car2)
