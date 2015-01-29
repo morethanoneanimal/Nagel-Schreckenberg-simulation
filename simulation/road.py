@@ -7,6 +7,9 @@ class Road:
         self.lanes = Road.generateEmptyLanes(lanesCount, length)
         self.updatedLanes = Road.generateEmptyLanes(lanesCount, length)
         self.speedLimits = speedLimits if speedLimits != None else simulation.speedLimits.SpeedLimits([], 5)
+        # stats
+        self.deadCars = 0 # cars that are gone
+        self.updates = 0
 
     def __updateCars(self, action):
         for lane in self.lanes:
@@ -15,12 +18,14 @@ class Road:
                     newPos = action(entity)
                     if self.inBounds(newPos):
                         self.updatedLanes[newPos[1]][newPos[0]] = entity
+                    else: self.deadCars += 1
         self.flipLanes()
 
     def update(self):
         self.speedLimits.update()
         self.__updateCars(lambda x: x.updateLane())
         self.__updateCars(lambda x: x.updateX())
+        self.updates += 1
 
     def flipLanes(self):
         self.lanes = self.updatedLanes
@@ -112,6 +117,19 @@ class Road:
         return len(self.lanes[0])
     def getLanesCount(self):
         return len(self.lanes)
+    def getCellCount(self):
+        return self.getLength() * self.getLanesCount()
+    def getAvgCarSpeed(self):
+        total = 0
+        cars = 0
+        for lane in self.lanes:
+            for entity in lane:
+                if entity != None:
+                    cars += 1
+                    total += entity.velocity
+        return (cars, total/cars)
+
+
 
     def generateEmptyLanes(lanesCount, length):
         lanes = []
