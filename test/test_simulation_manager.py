@@ -23,6 +23,7 @@ class TestSimulationManager(unittest.TestCase):
         self.simulation.makeSteps(x)
         self.assertEqual(x, self.mock.update.call_count)
         self.assertEqual(x, self.trafficGeneratorMock.generate.call_count)
+
     def test_space_key(self):
         self.assertTrue( self.simulation.isStopped() ) # default behaviour after init
         for x in range(100): self.simulation.update(self.updateFrame)
