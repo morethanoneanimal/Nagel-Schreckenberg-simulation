@@ -1,4 +1,4 @@
-import simulation.speedLimits
+import simulation.speedLimits, random
 from functools import reduce
 from simulation.car import Car
 
@@ -33,15 +33,23 @@ class Road:
         else:
             return False
 
-    def pushCars(self, amount, y = 0):
-        if amount == 0 or y >= self.getLanesCount():
-            return 0
+    def pushCars(self, amount):
+        return self.__pushCars(amount, [x for x in reversed(range(self.getLanesCount()))])
+
+    def pushCarsRandomly(self, amount):
+        lanes = [x for x in range(self.getLanesCount())]
+        random.shuffle(lanes)
+        return self.__pushCars(amount, lanes)
+
+    def __pushCars(self, amount, lanes):
+        if not amount or not lanes: return 0
         else:
-            car = Car(self, (0, y), self.speedLimits.maxSpeed)
-            if self.placeObject(car):
-                return 1 + self.pushCars(amount - 1, y + 1)
+            lane = lanes.pop()
+            car = Car(self, (0, lane), self.speedLimits.maxSpeed)
+            if(self.placeObject(car)):
+                return 1 + self.__pushCars(amount - 1, lanes)
             else:
-                return self.pushCars(amount, y + 1)
+                return self.__pushCars(amount, lanes)
 
     def carCount(self):
         return sum( reduce(lambda x, y: x+(0 if y == None else 1), lane, 0) for lane in self.lanes)
