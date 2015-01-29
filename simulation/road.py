@@ -129,8 +129,6 @@ class Road:
                     total += entity.velocity
         return (cars, total/cars)
 
-
-
     def generateEmptyLanes(lanesCount, length):
         lanes = []
         for x in range(lanesCount):
