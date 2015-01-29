@@ -88,3 +88,14 @@ class TestRoad(unittest.TestCase):
             r.update()
         self.assertEqual(0, car.velocity)
         self.assertEqual((9, 0), car.pos)
+
+    def test_pushCars(self):
+         lanes = 5
+         for x in range(lanes + 1):
+             road = Road(lanes, 100, None)
+             self.assertEqual(x, road.pushCars(x))
+         for x in range(lanes + 1, 100):
+             road = Road(lanes, 100, None)
+             self.assertEqual(lanes, road.pushCars(x))
+
+

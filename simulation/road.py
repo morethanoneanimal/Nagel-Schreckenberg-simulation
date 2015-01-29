@@ -33,14 +33,15 @@ class Road:
         else:
             return False
 
-    def pushCars(self, amount):
-        total = 0
-        for y in range(self.getLanesCount()):
+    def pushCars(self, amount, y = 0):
+        if amount == 0 or y >= self.getLanesCount():
+            return 0
+        else:
             car = Car(self, (0, y), self.speedLimits.maxSpeed)
             if self.placeObject(car):
-                total += 1
-        return total
-
+                return 1 + self.pushCars(amount - 1, y + 1)
+            else:
+                return self.pushCars(amount, y + 1)
 
     def carCount(self):
         return sum( reduce(lambda x, y: x+(0 if y == None else 1), lane, 0) for lane in self.lanes)
