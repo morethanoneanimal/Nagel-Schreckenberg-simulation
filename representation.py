@@ -23,15 +23,24 @@ class Representation():
             self.__drawLane(lane, y, dt)
             y += self.cellSize
 
+
+
     def __drawLane(self, lane, y, dt):
         x = 0
         for cell in lane:
-            realPos = self.__getPosOnScreen((x,y))
-            pygame.draw.rect(self.screen, (0, 30, 200), (realPos[0], realPos[1], self.cellSize, self.cellSize), 2)
+            idx = x / self.cellSize, y / self.cellSize
+            speedLimit = self.road.getSpeedLimitAt(idx)
+            self.__drawCell(x, y, speedLimit)
             if cell != None:
                 self.__drawCar(cell, x, y)
 
             x += self.cellSize
+
+    def __drawCell(self, x, y, speedLimit):
+        realPos = self.__getPosOnScreen((x,y))
+        factor = 30 + speedLimit*30
+        pygame.draw.rect(self.screen, (factor, factor, factor), (realPos[0], realPos[1], self.cellSize, self.cellSize), 0)
+#        pygame.draw.rect(self.screen, (0, 30, 200), (realPos[0], realPos[1], self.cellSize, self.cellSize), 2)
 
     def __drawCar(self, car, x, y):
         invProgress = (1 - self.acc / self.updateFrame)*self.cellSize
