@@ -28,12 +28,12 @@ class SimulationManager:
 
     def processKey(self, key):
         {
-                pygame.K_ESCAPE: self.__exit,
-                pygame.K_SPACE:  self.__pauseSwitch,
-                pygame.K_m: self.__speedUp,
-                pygame.K_n: self.__speedDown,
-                pygame.K_s: self.__oneStepForward
-        }[key]()
+            pygame.K_ESCAPE: self.__exit,
+            pygame.K_SPACE:  self.__pauseSwitch,
+            pygame.K_m: self.__speedUp,
+            pygame.K_n: self.__speedDown,
+            pygame.K_s: self.__oneStepForward
+        }.get(key, lambda: print("Unknown key"))()
 
     def isStopped(self):
         return self.timeFactor == 0
