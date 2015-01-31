@@ -1,4 +1,5 @@
 import pygame
+from infoDisplayer import *
 
 class Representation():
     def __init__(self, screen, road, updateFrame):
@@ -10,20 +11,21 @@ class Representation():
         self.cellSize = 15
         self.acc = 0
 
+        self.infoDisplayer = InfoDisplayer(screen, road)
+
         self.colors = [ (255, 0, 0), (180, 20, 0), (80, 60, 0), (100, 80, 0), (0, 180, 0), (0, 255, 0), (80, 120, 0), (60, 140, 0), (40, 160, 0) ]
 
     def draw(self, dt):
         self.__updateAcc(dt)
         self.screen.fill( (0, 0, 0) )
         self.drawRoad(dt)
+        self.infoDisplayer.draw()
 
     def drawRoad(self, dt):
         y = 0
         for lane in self.road.lanes:
             self.__drawLane(lane, y, dt)
             y += self.cellSize
-
-
 
     def __drawLane(self, lane, y, dt):
         x = 0
@@ -50,6 +52,8 @@ class Representation():
 
     def __updateAcc(self, dt):
         self.acc += dt
+        if self.acc >= self.updateFrame:
+            self.infoDisplayer.update()
         self.acc = self.acc % (self.updateFrame + 0)
 
     def __getPosOnScreen(self, pos):
