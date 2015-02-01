@@ -108,7 +108,9 @@ class Road:
         return all(self.placeObject(entity) for entity in entities)
 
     def placeObject(self, entity):
-        if not self.inBounds(entity.pos) or self.lanes[entity.pos[1]][entity.pos[0]] != None: return False
+        if (not self.inBounds(entity.pos)
+                or self.lanes[entity.pos[1]][entity.pos[0]] != None
+                or self.getSpeedLimitAt(entity.pos) == 0): return False
         else:
             self.lanes[entity.pos[1]][entity.pos[0]] = entity
             return True

@@ -98,4 +98,9 @@ class TestRoad(unittest.TestCase):
              road = Road(lanes, 100, None)
              self.assertEqual(lanes, road.pushCars(x))
 
+    def test_cant_push_car_on_stop(self):
+         speedLimits = SpeedLimits( [SpeedLimit.createObstacle((0,1))], 5 )
+         r = Road(3, 40, speedLimits)
+         self.assertFalse( r.placeObject( Car(r, (0,1)) ))
+
 
