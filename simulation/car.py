@@ -1,6 +1,8 @@
 import random
 
 class Car:
+    slowDownProbability = 0
+    laneChangeProbability = 0
     def __init__(self, road, pos, velocity = 0):
         self.velocity = velocity
         self.road = road
@@ -10,17 +12,17 @@ class Car:
     def updateLane(self):
         self.prevPos = self.pos
         if self.willingToChangeUp():
-            if random.random() >= 0.5:
+            if random.random() >= Car.laneChangeProbability:
                 self.pos = self.pos[0], self.pos[1]-1
         elif self.willingToChangeDown():
-            if random.random() >= 0.5:
+            if random.random() >= Car.laneChangeProbability:
                 self.pos = self.pos[0], self.pos[1]+1
         return self.pos
 
     def updateX(self):
         self.velocity = self.calcNewVelocity()
 
-        if self.velocity > 0 and random.random() >= 0.75:
+        if self.velocity > 0 and random.random() <= Car.slowDownProbability:
             self.velocity -= 1
 
         self.pos = self.pos[0] + self.velocity, self.pos[1]
