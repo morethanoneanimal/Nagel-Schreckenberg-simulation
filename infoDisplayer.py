@@ -7,7 +7,11 @@ class InfoDisplayer():
         self.string = ''
         self.cells = road.getCellCount()
         self.font = pygame.font.SysFont("monospace", 15)
-        self.labels = []
+        self.keysInfo = "Space = pause, M - 2x faster, N - 2x slower, S - step"
+        self.renderLabels( [self.keysInfo] )
+
+    def renderLabels(self, text):
+        self.labels = list(map(lambda x: self.font.render(x, 1, (255, 255, 0)), text))
 
     def update(self):
         totalCars, avgSpeed = self.road.getAvgCarSpeed()
@@ -19,12 +23,12 @@ class InfoDisplayer():
         text.append("updates: " + str(updates))
         text.append("dead cars: " + str(deadCars))
         text.append("congestion: " + str(congestion))
-
-        self.labels = list(map(lambda x: self.font.render(x, 1, (255, 255, 0)), text))
-        #self.labels.append(self.font.render(self.string, 1, (255, 255, 0)))
+        text.append('')
+        text.append(self.keysInfo)
+        self.renderLabels(text)
 
     def draw(self):
-        y = 500
+        y = self.screen.get_height() - 150
         for label in self.labels:
             self.screen.blit(label, (20, y))
             y += 20
