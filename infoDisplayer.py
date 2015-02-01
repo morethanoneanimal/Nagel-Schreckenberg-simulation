@@ -7,7 +7,7 @@ class InfoDisplayer():
         self.string = ''
         self.cells = road.getCellCount()
         self.font = pygame.font.SysFont("monospace", 15)
-        self.keysInfo = "Space = pause, M - 2x faster, N - 2x slower, S - step"
+        self.keysInfo = "Space = pause, M - 2x faster, N - 2x slower, S - step, D - 500 steps"
         self.renderLabels( [self.keysInfo] )
 
     def renderLabels(self, text):
