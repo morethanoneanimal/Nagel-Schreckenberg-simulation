@@ -32,7 +32,8 @@ class SimulationManager:
             pygame.K_SPACE:  self.__pauseSwitch,
             pygame.K_m: self.__speedUp,
             pygame.K_n: self.__speedDown,
-            pygame.K_s: self.__oneStepForward
+            pygame.K_s: self.__oneStepForward,
+            pygame.K_d: self.__manyStepsForward(500)
         }.get(key, lambda: print("Unknown key"))()
 
     def isStopped(self):
@@ -46,4 +47,8 @@ class SimulationManager:
     def __oneStepForward(self):
         if self.isStopped(): self.makeStep()
         else: print("Can't make step: simulation is running")
+    def __manyStepsForward(self, steps):
+        def manySteps():
+            self.makeSteps(steps)
+        return manySteps
 

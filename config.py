@@ -2,7 +2,7 @@ from simulation.speedLimits import *
 from simulation.trafficGenerators import * 
 
 maxFps= 40
-size = width, heigth = 1280, 800
+size = width, heigth = 1280, 500
 # in miliseconds
 updateFrame = 500
 

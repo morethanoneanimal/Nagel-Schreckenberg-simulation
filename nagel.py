@@ -15,8 +15,8 @@ screen = pygame.display.set_mode(config.size)
 
 clock = pygame.time.Clock()
 
-simulation.car.slowDownProbability = config.slowDownProbability
-simulation.car.laneChangeProbability = config.laneChangeProbability
+simulation.car.Car.slowDownProbability = config.slowDownProbability
+simulation.car.Car.laneChangeProbability = config.laneChangeProbability
 speedLimits = simulation.speedLimits.SpeedLimits(config.speedLimits, config.maxSpeed)
 road = simulation.road.Road(config.lanes, config.length, speedLimits)
 representation = Representation(screen, road, config.updateFrame)
