@@ -22,7 +22,7 @@ class InfoDisplayer():
         text = ["avg speed: {:0.3f}".format(avgSpeed, deadCars)]
         text.append("updates: " + str(updates))
         text.append("dead cars: " + str(deadCars))
-        text.append("congestion: " + str(congestion))
+        text.append("congestion: {:0.3f}".format(congestion))
         text.append('')
         text.append(self.keysInfo)
         self.renderLabels(text)
