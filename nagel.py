@@ -10,7 +10,7 @@ if len(sys.argv) != 2:
 random.seed(100)
 pygame.init()
 
-config = __import__(sys.argv[1])
+config = __import__(sys.argv[1] if sys.argv[1][-3:] != '.py' else sys.argv[1][:-3])
 screen = pygame.display.set_mode(config.size)
 
 clock = pygame.time.Clock()
