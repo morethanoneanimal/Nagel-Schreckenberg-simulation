@@ -1,4 +1,4 @@
-import sys, pygame, simulation.road, simulation.speedLimits, random
+import sys, pygame, simulation.road, simulation.speedLimits, random, importlib, config
 from simulation.car import Car
 from representation import Representation
 from simulationManager import SimulationManager
@@ -10,7 +10,7 @@ if len(sys.argv) != 2:
 random.seed(100)
 pygame.init()
 
-config = __import__(sys.argv[1] if sys.argv[1][-3:] != '.py' else sys.argv[1][:-3])
+config = importlib.import_module(sys.argv[1])
 screen = pygame.display.set_mode(config.size)
 
 clock = pygame.time.Clock()
