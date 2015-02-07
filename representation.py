@@ -2,16 +2,16 @@ import pygame
 from infoDisplayer import *
 
 class Representation():
-    def __init__(self, screen, road, updateFrame):
+    def __init__(self, screen, road, simulationManager):
         self.screen = screen
         self.width, self.heigth = screen.get_width(), screen.get_height()
         self.road = road
-        self.updateFrame = updateFrame
+        self.updateFrame = simulationManager.updateFrame
         self.margins = (10, 10)
         self.cellSize = 15
         self.acc = 0
 
-        self.infoDisplayer = InfoDisplayer(screen, road)
+        self.infoDisplayer = InfoDisplayer(screen, road, simulationManager)
 
         self.colors = [ (255, 0, 0), (180, 20, 0), (80, 60, 0), (100, 80, 0), (0, 180, 0), (0, 255, 0), (80, 120, 0), (60, 140, 0), (40, 160, 0) ]
 
@@ -60,5 +60,5 @@ class Representation():
         x, y = pos
         while x + self.margins[0] >= self.width - self.margins[0]:
             x -= (self.width - 2*self.margins[0])
-            y += (self.road.getLanesCount() + 1) * self.cellSize
+            y += (self.road.getLanesCount() + 1) * self.cellSize + self.cellSize
         return (x + self.margins[0], y + self.margins[1])
