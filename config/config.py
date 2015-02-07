@@ -6,6 +6,8 @@ size = width, heigth = 1280, 500
 # in miliseconds
 updateFrame = 500
 
+seed = None
+
 lanes = 2
 length = 200
 

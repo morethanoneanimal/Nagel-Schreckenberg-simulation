@@ -7,10 +7,11 @@ from simulation.trafficGenerators import *
 if len(sys.argv) != 2:
     print("Usage: python pyTraffic.py module_with_config")
     exit()
-random.seed(100)
-pygame.init()
 
 config = importlib.import_module(sys.argv[1])
+
+random.seed(config.seed)
+pygame.init()
 screen = pygame.display.set_mode(config.size)
 
 clock = pygame.time.Clock()
@@ -19,8 +20,8 @@ simulation.car.Car.slowDownProbability = config.slowDownProbability
 simulation.car.Car.laneChangeProbability = config.laneChangeProbability
 speedLimits = simulation.speedLimits.SpeedLimits(config.speedLimits, config.maxSpeed)
 road = simulation.road.Road(config.lanes, config.length, speedLimits)
-representation = Representation(screen, road, config.updateFrame)
 simulation = SimulationManager(road, config.trafficGenerator, config.updateFrame)
+representation = Representation(screen, road, simulation)
 
 while simulation.running:
     for event in pygame.event.get():
