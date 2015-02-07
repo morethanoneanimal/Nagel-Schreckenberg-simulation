@@ -1,9 +1,13 @@
-# Nagel-Schreckenberg-simulation
+# Nagel Schreckenberg simulation
 Traffic simulation based on Nagel-Schreckenberg model with:
 * n lanes,
 * traffic lights,
 * speed limits,
 * obstacles.
+
+[Youtube video](http://www.youtube.com/watch?v=9mvEJSlWZa8)
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/9mvEJSlWZa8/0.jpg)](http://www.youtube.com/watch?v=9mvEJSlWZa8)
 
 In classic NS model cars move around in circle, so there is the same number of cars all the time. In this model they are generated in each iteration and once they reach the end of the road they are destroyed.
 
