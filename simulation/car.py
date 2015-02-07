@@ -44,4 +44,4 @@ class Car:
         if prevCar == None: return True
         else:
             distanceToPrevCar = self.pos[0] - prevCar.pos[0]
-            return distanceToPrevCar >= prevCar.velocity
+            return distanceToPrevCar > prevCar.velocity
