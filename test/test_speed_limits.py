@@ -32,4 +32,5 @@ class TestSpeedLimit(unittest.TestCase):
             self.obstacle.update()
 
         self.assertFalse(self.lights.active)
-        self.assertTrue(self.static.active or self.obstacle.active)
+        self.assertTrue(self.static.active)
+        self.assertTrue(self.obstacle.active)
