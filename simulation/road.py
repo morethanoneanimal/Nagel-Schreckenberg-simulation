@@ -63,7 +63,7 @@ class Road:
         return self.speedLimits.getLimit(pos)
 
     def distanceToNextThing(self, pos):
-        """Counts distance between given pos and next object (car or obstacle), takes into considerations stops (speedLimit set to 0)"""
+        """Calculates distance between given pos and the next object (car or obstacle), takes into considerations stops (speedLimit set to 0)"""
         return self.__distanceToNextThing((pos[0]+1, pos[1]))
     def __distanceToNextThing(self, pos):
         if pos[0] >= self.getLength():
